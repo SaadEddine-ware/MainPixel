@@ -6,12 +6,13 @@ from typing import List
 from app.core.database import get_db
 from app.models.note import Note
 from app.schemas.note_schema import NoteCreate, NoteUpdate, NoteOut
+from app.core.security import get_current_user
 
 router = APIRouter()
 
 
 @router.get("/", response_model=List[NoteOut])
-async def list_notes(school_id: UUID, student_id: UUID = None, class_id: UUID = None, semester: int = None, academic_year: str = None, db: AsyncSession = Depends(get_db)):
+async def list_notes(school_id: UUID, student_id: UUID = None, class_id: UUID = None, semester: int = None, academic_year: str = None, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     query = select(Note).where(Note.school_id == school_id)
     if student_id:
         query = query.where(Note.student_id == student_id)
@@ -26,7 +27,7 @@ async def list_notes(school_id: UUID, student_id: UUID = None, class_id: UUID = 
 
 
 @router.post("/", response_model=NoteOut, status_code=status.HTTP_201_CREATED)
-async def create_note(school_id: UUID, data: NoteCreate, db: AsyncSession = Depends(get_db)):
+async def create_note(school_id: UUID, data: NoteCreate, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     obj = Note(school_id=school_id, **data.model_dump())
     db.add(obj)
     await db.commit()
@@ -35,7 +36,7 @@ async def create_note(school_id: UUID, data: NoteCreate, db: AsyncSession = Depe
 
 
 @router.post("/bulk", response_model=List[NoteOut])
-async def bulk_create_notes(school_id: UUID, notes: List[NoteCreate], db: AsyncSession = Depends(get_db)):
+async def bulk_create_notes(school_id: UUID, notes: List[NoteCreate], payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     objs = []
     for data in notes:
         obj = Note(school_id=school_id, **data.model_dump())
@@ -48,7 +49,7 @@ async def bulk_create_notes(school_id: UUID, notes: List[NoteCreate], db: AsyncS
 
 
 @router.get("/{note_id}", response_model=NoteOut)
-async def get_note(note_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_note(note_id: UUID, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Note).where(Note.id == note_id))
     obj = result.scalar_one_or_none()
     if not obj:
@@ -57,7 +58,7 @@ async def get_note(note_id: UUID, db: AsyncSession = Depends(get_db)):
 
 
 @router.put("/{note_id}", response_model=NoteOut)
-async def update_note(note_id: UUID, data: NoteUpdate, db: AsyncSession = Depends(get_db)):
+async def update_note(note_id: UUID, data: NoteUpdate, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Note).where(Note.id == note_id))
     obj = result.scalar_one_or_none()
     if not obj:
@@ -70,7 +71,7 @@ async def update_note(note_id: UUID, data: NoteUpdate, db: AsyncSession = Depend
 
 
 @router.delete("/{note_id}")
-async def delete_note(note_id: UUID, db: AsyncSession = Depends(get_db)):
+async def delete_note(note_id: UUID, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Note).where(Note.id == note_id))
     obj = result.scalar_one_or_none()
     if not obj:
@@ -81,7 +82,7 @@ async def delete_note(note_id: UUID, db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/student/{student_id}/moyenne")
-async def get_student_moyenne(student_id: UUID, semester: int, academic_year: str, db: AsyncSession = Depends(get_db)):
+async def get_student_moyenne(student_id: UUID, semester: int, academic_year: str, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(
         select(Note).where(
             Note.student_id == student_id,

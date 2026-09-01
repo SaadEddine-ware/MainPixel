@@ -8,12 +8,13 @@ import io
 from app.core.database import get_db
 from app.models.student import Student
 from app.schemas.student_schema import StudentCreate, StudentUpdate, StudentOut
+from app.core.security import get_current_user
 
 router = APIRouter()
 
 
 @router.get("/", response_model=List[StudentOut])
-async def list_students(school_id: UUID, class_id: UUID = None, db: AsyncSession = Depends(get_db)):
+async def list_students(school_id: UUID, class_id: UUID = None, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     query = select(Student).where(Student.school_id == school_id, Student.is_active == True)
     if class_id:
         query = query.where(Student.class_id == class_id)
@@ -22,7 +23,7 @@ async def list_students(school_id: UUID, class_id: UUID = None, db: AsyncSession
 
 
 @router.post("/", response_model=StudentOut, status_code=status.HTTP_201_CREATED)
-async def create_student(school_id: UUID, data: StudentCreate, db: AsyncSession = Depends(get_db)):
+async def create_student(school_id: UUID, data: StudentCreate, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     obj = Student(school_id=school_id, **data.model_dump())
     db.add(obj)
     await db.commit()
@@ -31,7 +32,7 @@ async def create_student(school_id: UUID, data: StudentCreate, db: AsyncSession 
 
 
 @router.post("/import-csv", response_model=List[StudentOut])
-async def import_students_csv(school_id: UUID, class_id: UUID, file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
+async def import_students_csv(school_id: UUID, class_id: UUID, file: UploadFile = File(...), payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     content = await file.read()
     reader = csv.DictReader(io.StringIO(content.decode("utf-8")))
     students = []
@@ -59,7 +60,7 @@ async def import_students_csv(school_id: UUID, class_id: UUID, file: UploadFile 
 
 
 @router.get("/{student_id}", response_model=StudentOut)
-async def get_student(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_student(student_id: UUID, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Student).where(Student.id == student_id))
     obj = result.scalar_one_or_none()
     if not obj:
@@ -68,7 +69,7 @@ async def get_student(student_id: UUID, db: AsyncSession = Depends(get_db)):
 
 
 @router.put("/{student_id}", response_model=StudentOut)
-async def update_student(student_id: UUID, data: StudentUpdate, db: AsyncSession = Depends(get_db)):
+async def update_student(student_id: UUID, data: StudentUpdate, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Student).where(Student.id == student_id))
     obj = result.scalar_one_or_none()
     if not obj:
@@ -81,7 +82,7 @@ async def update_student(student_id: UUID, data: StudentUpdate, db: AsyncSession
 
 
 @router.delete("/{student_id}")
-async def delete_student(student_id: UUID, db: AsyncSession = Depends(get_db)):
+async def delete_student(student_id: UUID, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Student).where(Student.id == student_id))
     obj = result.scalar_one_or_none()
     if not obj:

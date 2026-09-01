@@ -4,26 +4,21 @@ from sqlalchemy import select
 from uuid import UUID
 from typing import List
 from app.core.database import get_db
+from app.core.security import get_current_user
 from app.models.assignment import Assignment
 from app.models.grade import Grade
-from app.models.user import User
-from app.core.security import decode_token
-from fastapi import Header
-from typing import Optional
 
 router = APIRouter()
 
 
-def get_current_user_id(authorization: Optional[str] = Header(None)):
-    if authorization and authorization.startswith("Bearer "):
-        payload = decode_token(authorization.split(" ")[1])
-        if payload:
-            return UUID(payload["sub"])
-    return None
-
-
 @router.get("/", response_model=List[dict])
-async def list_assignments(school_id: UUID, class_id: UUID = None, subject_id: UUID = None, db: AsyncSession = Depends(get_db)):
+async def list_assignments(
+    school_id: UUID,
+    class_id: UUID = None,
+    subject_id: UUID = None,
+    payload: dict = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
     query = select(Assignment).where(Assignment.school_id == school_id, Assignment.is_active == True)
     if class_id:
         query = query.where(Assignment.class_id == class_id)
@@ -51,8 +46,13 @@ async def list_assignments(school_id: UUID, class_id: UUID = None, subject_id: U
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_assignment(school_id: UUID, data: dict, authorization: Optional[str] = Header(None), db: AsyncSession = Depends(get_db)):
-    teacher_id = get_current_user_id(authorization)
+async def create_assignment(
+    school_id: UUID,
+    data: dict,
+    payload: dict = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    teacher_id = UUID(payload["sub"])
     obj = Assignment(school_id=school_id, teacher_id=teacher_id, **data)
     db.add(obj)
     await db.commit()
@@ -61,13 +61,17 @@ async def create_assignment(school_id: UUID, data: dict, authorization: Optional
 
 
 @router.post("/{assignment_id}/grades", status_code=status.HTTP_201_CREATED)
-async def add_grade(assignment_id: UUID, data: dict, authorization: Optional[str] = Header(None), db: AsyncSession = Depends(get_db)):
-    graded_by = get_current_user_id(authorization)
+async def add_grade(
+    assignment_id: UUID,
+    data: dict,
+    payload: dict = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    graded_by = UUID(payload["sub"])
     result = await db.execute(select(Assignment).where(Assignment.id == assignment_id))
     assignment = result.scalar_one_or_none()
     if not assignment:
         raise HTTPException(status_code=404, detail="Assignment not found")
-
     obj = Grade(
         school_id=assignment.school_id,
         assignment_id=assignment_id,
@@ -84,7 +88,11 @@ async def add_grade(assignment_id: UUID, data: dict, authorization: Optional[str
 
 
 @router.get("/{assignment_id}/grades")
-async def list_grades(assignment_id: UUID, db: AsyncSession = Depends(get_db)):
+async def list_grades(
+    assignment_id: UUID,
+    payload: dict = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
     result = await db.execute(select(Grade).where(Grade.assignment_id == assignment_id))
     grades = result.scalars().all()
     return [
@@ -101,7 +109,11 @@ async def list_grades(assignment_id: UUID, db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/{assignment_id}")
-async def get_assignment(assignment_id: UUID, db: AsyncSession = Depends(get_db)):
+async def get_assignment(
+    assignment_id: UUID,
+    payload: dict = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
     result = await db.execute(select(Assignment).where(Assignment.id == assignment_id))
     obj = result.scalar_one_or_none()
     if not obj:

@@ -9,12 +9,13 @@ from app.models.note import Note
 from app.models.subject import Subject
 from app.models.school_class import SchoolClass
 from app.models.school import School
+from app.core.security import get_current_user
 
 router = APIRouter()
 
 
 @router.get("/bulletin/{student_id}")
-async def get_bulletin(student_id: UUID, semester: int, academic_year: str, db: AsyncSession = Depends(get_db)):
+async def get_bulletin(student_id: UUID, semester: int, academic_year: str, payload: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     student_r = await db.execute(select(Student).where(Student.id == student_id))
     student = student_r.scalar_one_or_none()
     if not student:

@@ -17,6 +17,26 @@ from app.models.school_class import SchoolClass
 from app.models.subject import Subject
 from app.models.notification import Notification
 from app.core.security import get_current_user
+import json
+from app.core.redis import redis_client
+
+
+
+async def _get_cached(key: str, ttl: int = 300):
+    try:
+        data = await redis_client.get(key)
+        if data:
+            return json.loads(data)
+    except Exception:
+        pass
+    return None
+
+
+async def _set_cached(key: str, data: dict, ttl: int = 300):
+    try:
+        await redis_client.setex(key, ttl, json.dumps(data, default=str))
+    except Exception:
+        pass
 
 router = APIRouter()
 

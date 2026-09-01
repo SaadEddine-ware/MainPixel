@@ -1,19 +1,21 @@
 import imaplib
 import email
-import json
 import os
 import time
 import subprocess
 from datetime import datetime
 from email.header import decode_header
 
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), "email_config.json")
 LAST_CHECK_PATH = os.path.join(os.path.dirname(__file__), ".last_email_check")
 
 
-def load_config():
-    with open(CONFIG_PATH) as f:
-        return json.load(f)
+def get_config():
+    return {
+        "smtp_server": os.environ.get("SMTP_HOST", "smtp.gmail.com"),
+        "email": os.environ.get("SMTP_USER", ""),
+        "app_password": os.environ.get("SMTP_PASSWORD", ""),
+        "check_interval": int(os.environ.get("EMAIL_CHECK_INTERVAL", "10")),
+    }
 
 
 def get_last_check():
@@ -42,7 +44,7 @@ def decode_mime_header(header):
 
 
 def check_emails():
-    config = load_config()
+    config = get_config()
     last_check = get_last_check()
 
     try:
@@ -113,7 +115,8 @@ def process_command(email_data):
 
 
 def run_checker():
-    interval = load_config()["check_interval"]
+    config = get_config()
+    interval = config["check_interval"]
     print(f"[{datetime.now()}] Email checker started. Checking every {interval}s")
 
     while True:

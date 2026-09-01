@@ -1,20 +1,24 @@
 import smtplib
-import json
 import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), "email_config.json")
 
-
-def load_config():
-    with open(CONFIG_PATH) as f:
-        return json.load(f)
+def get_config():
+    return {
+        "smtp_server": os.environ.get("SMTP_HOST", "smtp.gmail.com"),
+        "smtp_port": int(os.environ.get("SMTP_PORT", "587")),
+        "email": os.environ.get("SMTP_USER", ""),
+        "app_password": os.environ.get("SMTP_PASSWORD", ""),
+    }
 
 
 def send_email(subject, body, to=None):
-    config = load_config()
+    config = get_config()
+    if not config["email"] or not config["app_password"]:
+        print(f"[{datetime.now()}] Email failed: SMTP_USER and SMTP_PASSWORD environment variables not set")
+        return False
     to = to or config["email"]
 
     msg = MIMEMultipart()

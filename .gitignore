@@ -15,10 +15,47 @@ node_modules/
 frontend/dist/
 frontend/.vite/
 
-# Environment
+# Environment / Secrets
 .env
 .env.local
 .env.production
+.env.*
+!.env.example
+
+# Email / SMTP config (contains credentials)
+scripts/email_config.json
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# Secret / credential files
+*secret*
+*credential*
+*password*
+!*password*.md
+
+# AWS / Cloud credentials
+.aws/
+credentials
+*.awscredentials
+
+# GCP
+service-account*.json
+*-service-account*.json
+
+# SSH keys
+id_rsa*
+id_ed25519*
+*.pub
+
+# Backup files that may contain secrets
+*.bak
+*.sql
+*.dump
 
 # IDE
 .vscode/

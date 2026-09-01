@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Liste des élèves — {{ class_name }}</title>
+<style>
+  @page { margin: 1.5cm; size: A4 landscape; }
+  body { font-family: 'Times New Roman', serif; font-size: 10pt; color: #000; }
+  .header { text-align: center; margin-bottom: 20px; }
+  .header .ministry { font-size: 13pt; font-weight: bold; }
+  .header .sub { font-size: 11pt; }
+  .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 15px 0; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th { background: #006233; color: white; padding: 6px 4px; font-weight: bold; text-align: center; font-size: 9pt; }
+  td { padding: 4px; border: 1px solid #333; text-align: left; font-size: 9pt; }
+  tr:nth-child(even) { background: #f9f9f9; }
+  .numero { text-align: center; width: 30px; }
+  .massar { text-align: center; width: 120px; }
+  .footer { text-align: center; margin-top: 20px; font-size: 8pt; }
+  hr { border: none; border-top: 2px solid #006233; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="ministry">Royaume du Maroc — Ministère de l'Éducation Nationale</div>
+  <div class="sub">{{ ecole }}</div>
+  <hr>
+</div>
+
+<div class="title">
+  LISTE DES ÉLÈVES<br>
+  {{ class_name }} — {{ level_name }} ({{ year_name }})<br>
+  Année scolaire : {{ academic_year }}
+</div>
+
+<p><strong>Effectif total :</strong> {{ students|length }} élève(s)</p>
+
+<table>
+<tr>
+  <th class="numero">N°</th>
+  <th>Nom et prénom</th>
+  <th class="massar">Code Massar</th>
+  <th>Date de naissance</th>
+  <th>Sexe</th>
+  <th>Adresse</th>
+  <th>Père</th>
+  <th>Mère</th>
+  <th>Notes</th>
+</tr>
+{% for s in students %}
+<tr>
+  <td class="numero">{{ loop.index }}</td>
+  <td>{{ s.full_name }}</td>
+  <td class="massar">{{ s.code_massar or '' }}</td>
+  <td>{{ s.birth_date or '' }}</td>
+  <td>{{ s.sexe or '' }}</td>
+  <td>{{ s.address or '' }}</td>
+  <td>{{ s.father_name or '' }}</td>
+  <td>{{ s.mother_name or '' }}</td>
+  <td>{{ s.notes or '' }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<div class="footer">
+  Document généré par mainpixel le {{ generation_date }}
+</div>
+</body>
+</html>

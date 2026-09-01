@@ -1,0 +1,56 @@
+{
+  "app.title": "mainpixel — Gestion des Devoirs (Professeur)",
+  "app.subtitle": "Saisie des notes",
+
+  "nav.assignments": "Devoirs",
+  "nav.connect": "Connexion",
+  "nav.guide": "Guide",
+
+  "connect.title": "Connexion à l'administration",
+  "connect.my_ip": "Votre IP locale : {ip}",
+  "connect.copy_ip": "Copier",
+  "connect.ip_copied": "✓ Copié",
+  "connect.name_label": "Nom du professeur :",
+  "connect.ip_label": "Adresse IP de l'administration :",
+  "connect.password_label": "Mot de passe de chiffrement :",
+  "connect.btn": "Connecter",
+  "connect.success": "Connecté en tant que '{name}'.",
+  "connect.fail": "Échec de connexion : {error}",
+  "connect.required": "Nom et adresse IP requis",
+  "connect.status_ok": "✓ Connecté à {host}",
+  "connect.status_error": "✗ Déconnecté",
+
+  "assignments.select_class": "Sélectionnez une classe",
+  "assignments.select_subject": "Sélectionnez une matière",
+  "assignments.back_to_classes": "← Retour aux classes",
+  "assignments.back_to_subjects": "← Retour aux matières",
+  "assignments.loading": "Chargement...",
+  "assignments.student_header": "Élève",
+  "assignments.avg_header": "Moyenne",
+  "assignments.no_students": "Aucun élève dans cette classe.",
+  "assignments.no_subjects": "Aucune matière disponible.",
+  "assignments.add_assignment": "+ Devoir",
+  "assignments.title_prompt": "Titre du devoir :",
+  "assignments.send": "🌐 Envoyer à l'admin",
+  "assignments.sending": "Envoi en cours...",
+  "assignments.sent": "{assignments} devoir(s), {grades} note(s) envoyé(s).",
+  "assignments.send_fail": "Échec d'envoi : {error}",
+  "assignments.sem1": "Semestre 1",
+  "assignments.sem2": "Semestre 2",
+  "assignments.no_assignments": "Aucun devoir. Cliquez sur '+ Devoir' pour ajouter.",
+
+  "dialog.error": "Erreur",
+  "dialog.success": "Succès",
+  "dialog.info": "Information",
+  "dialog.close": "Fermer",
+  "dialog.confirm": "Confirmer",
+  "dialog.delete_confirm": "Supprimer '{name}' ?",
+
+  "guide.title": "Guide d'utilisation",
+  "guide.text":
+"📡 UTILISATION DE L'APPLICATION PROFESSEUR\n\n1. CONNEXION :\n   • Cliquez sur l'onglet « Connexion »\n   • Entrez votre nom et l'adresse IP de l'administration\n   • Entrez le mot de passe de chiffrement (si configuré)\n   • Cliquez sur « Connecter »\n\n2. SAISIE DES NOTES :\n   • Cliquez sur l'onglet « Devoirs »\n   • Sélectionnez une classe\n   • Sélectionnez une matière\n   • Choisissez le semestre (S1/S2)\n   • Cliquez sur « + Devoir » pour ajouter un devoir\n   • Saisissez les notes pour chaque élève\n\n3. ENVOI :\n   • Cliquez sur « 🌐 Envoyer à l'admin »\n   • Les données sont transmises automatiquement\n   • L'administration peut les réceptionner",
+
+  "year": "Année",
+  "student": "élève",
+  "students_plural": "élèves"
+}

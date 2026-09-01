@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Relevé de notes — {{ student_name }}</title>
+<style>
+  @page { margin: 2cm; }
+  body { font-family: 'Times New Roman', serif; font-size: 11pt; color: #000; }
+  .header { text-align: center; margin-bottom: 25px; }
+  .header .ministry { font-size: 13pt; font-weight: bold; }
+  .header .sub { font-size: 11pt; }
+  .title { text-align: center; font-size: 14pt; font-weight: bold; margin: 20px 0; text-decoration: underline; }
+  .info { margin: 15px 0; }
+  .info td { padding: 3px 10px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th { background: #1f6aa5; color: white; padding: 6px; font-weight: bold; text-align: center; }
+  td { padding: 4px 6px; border: 1px solid #555; text-align: center; }
+  .subject { text-align: left; }
+  .total-row { font-weight: bold; background: #e8f0fe; }
+  .signature { margin-top: 50px; text-align: right; }
+  .footer { text-align: center; margin-top: 30px; font-size: 8pt; border-top: 1px solid #999; padding-top: 8px; }
+  hr { border: none; border-top: 2px solid #006233; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="ministry">Royaume du Maroc — Ministère de l'Éducation Nationale</div>
+  <div class="sub">{{ ecole }}</div>
+  <hr>
+</div>
+
+<div class="title">RELEVÉ DE NOTES</div>
+
+<table class="info">
+<tr><td><strong>Nom et prénom :</strong></td><td>{{ student_name }}</td></tr>
+<tr><td><strong>Code Massar :</strong></td><td>{{ code_massar }}</td></tr>
+<tr><td><strong>Classe :</strong></td><td>{{ class_name }}</td></tr>
+<tr><td><strong>Niveau :</strong></td><td>{{ level_name }}</td></tr>
+<tr><td><strong>Année scolaire :</strong></td><td>{{ academic_year }}</td></tr>
+</table>
+
+<table>
+<tr>
+  <th>Matières</th>
+  <th>Note /20</th>
+  <th>Appréciation</th>
+</tr>
+{% for subject, note in subjects %}
+<tr>
+  <td class="subject">{{ subject }}</td>
+  <td>{{ note }}</td>
+  <td>
+    {% if note >= 16 %}Très bien
+    {% elif note >= 14 %}Bien
+    {% elif note >= 12 %}Assez bien
+    {% elif note >= 10 %}Passable
+    {% else %}Insuffisant{% endif %}
+  </td>
+</tr>
+{% endfor %}
+<tr class="total-row">
+  <td class="subject"><strong>Moyenne générale</strong></td>
+  <td><strong>{{ moyenne }}</strong></td>
+  <td>
+    {% if moyenne >= 16 %}Très bien
+    {% elif moyenne >= 14 %}Bien
+    {% elif moyenne >= 12 %}Assez bien
+    {% elif moyenne >= 10 %}Passable
+    {% else %}Insuffisant{% endif %}
+  </td>
+</tr>
+</table>
+
+<div class="signature">
+  <p>Fait à {{ ville }}, le {{ date }}</p>
+  <p style="margin-top: 40px;"><strong>Le Directeur</strong></p>
+  <p>{{ directeur }}</p>
+</div>
+
+<div class="footer">
+  Document généré par mainpixel
+</div>
+</body>
+</html>

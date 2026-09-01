@@ -1,0 +1,56 @@
+{
+  "app.title": "مينبيكسل — إدارة الفروض (الأستاذ)",
+  "app.subtitle": "إدخال النقط",
+
+  "nav.assignments": "الفروض",
+  "nav.connect": "الاتصال",
+  "nav.guide": "الدليل",
+
+  "connect.title": "الاتصال بالإدارة",
+  "connect.my_ip": "IP المحلي: {ip}",
+  "connect.copy_ip": "نسخ",
+  "connect.ip_copied": "✓ تم النسخ",
+  "connect.name_label": "اسم الأستاذ:",
+  "connect.ip_label": "عنوان IP الإدارة:",
+  "connect.password_label": "كلمة سر التشفير:",
+  "connect.btn": "اتصال",
+  "connect.success": "متصل باسم '{name}'.",
+  "connect.fail": "فشل الاتصال: {error}",
+  "connect.required": "الاسم وعنوان IP مطلوبان",
+  "connect.status_ok": "✓ متصل بـ {host}",
+  "connect.status_error": "✗ غير متصل",
+
+  "assignments.select_class": "اختر قسماً",
+  "assignments.select_subject": "اختر مادة",
+  "assignments.back_to_classes": "← عودة إلى الأقسام",
+  "assignments.back_to_subjects": "← عودة إلى المواد",
+  "assignments.loading": "جار التحميل...",
+  "assignments.student_header": "التلميذ",
+  "assignments.avg_header": "المعدل",
+  "assignments.no_students": "لا يوجد تلاميذ في هذا القسم.",
+  "assignments.no_subjects": "لا توجد مواد متاحة.",
+  "assignments.add_assignment": "+ فرض",
+  "assignments.title_prompt": "عنوان الفرض:",
+  "assignments.send": "🌐 إرسال إلى الإدارة",
+  "assignments.sending": "جار الإرسال...",
+  "assignments.sent": "تم إرسال {assignments} فرض و {grades} نقطة.",
+  "assignments.send_fail": "فشل الإرسال: {error}",
+  "assignments.sem1": "الأسدس 1",
+  "assignments.sem2": "الأسدس 2",
+  "assignments.no_assignments": "لا توجد فروض. انقر '+ فرض' للإضافة.",
+
+  "dialog.error": "خطأ",
+  "dialog.success": "نجاح",
+  "dialog.info": "معلومات",
+  "dialog.close": "إغلاق",
+  "dialog.confirm": "تأكيد",
+  "dialog.delete_confirm": "حذف '{name}' ؟",
+
+  "guide.title": "دليل الاستخدام",
+  "guide.text":
+"📡 استخدام تطبيق الأستاذ\n\n1. الاتصال:\n   • افتح علامة التبويب «الاتصال»\n   • أدخل اسمك وعنوان IP الإدارة\n   • أدخل كلمة سر التشفير (إذا كانت مفعلة)\n   • انقر على «اتصال»\n\n2. إدخال النقط:\n   • افتح علامة التبويب «الفروض»\n   • اختر قسماً\n   • اختر مادة\n   • اختر الأسدس (S1/S2)\n   • انقر على «+ فرض» لإضافة فرض\n   • أدخل النقط لكل تلميذ\n\n3. الإرسال:\n   • انقر على «🌐 إرسال إلى الإدارة»\n   • تصل البيانات تلقائياً\n   • تستطيع الإدارة استلامها",
+
+  "year": "السنة",
+  "student": "تلميذ",
+  "students_plural": "تلاميذ"
+}

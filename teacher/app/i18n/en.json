@@ -1,0 +1,56 @@
+{
+  "app.title": "mainpixel — Assignment Management (Teacher)",
+  "app.subtitle": "Grade Entry",
+
+  "nav.assignments": "Assignments",
+  "nav.connect": "Connection",
+  "nav.guide": "Guide",
+
+  "connect.title": "Connect to Administration",
+  "connect.my_ip": "Your local IP: {ip}",
+  "connect.copy_ip": "Copy",
+  "connect.ip_copied": "✓ Copied",
+  "connect.name_label": "Teacher name:",
+  "connect.ip_label": "Admin IP address:",
+  "connect.password_label": "Encryption password:",
+  "connect.btn": "Connect",
+  "connect.success": "Connected as '{name}'.",
+  "connect.fail": "Connection failed: {error}",
+  "connect.required": "Name and IP address required",
+  "connect.status_ok": "✓ Connected to {host}",
+  "connect.status_error": "✗ Disconnected",
+
+  "assignments.select_class": "Select a class",
+  "assignments.select_subject": "Select a subject",
+  "assignments.back_to_classes": "← Back to classes",
+  "assignments.back_to_subjects": "← Back to subjects",
+  "assignments.loading": "Loading...",
+  "assignments.student_header": "Student",
+  "assignments.avg_header": "Average",
+  "assignments.no_students": "No students in this class.",
+  "assignments.no_subjects": "No subjects available.",
+  "assignments.add_assignment": "+ Assignment",
+  "assignments.title_prompt": "Assignment title:",
+  "assignments.send": "🌐 Send to admin",
+  "assignments.sending": "Sending...",
+  "assignments.sent": "{assignments} assignment(s), {grades} grade(s) sent.",
+  "assignments.send_fail": "Send failed: {error}",
+  "assignments.sem1": "Semester 1",
+  "assignments.sem2": "Semester 2",
+  "assignments.no_assignments": "No assignments. Click '+ Assignment' to add.",
+
+  "dialog.error": "Error",
+  "dialog.success": "Success",
+  "dialog.info": "Information",
+  "dialog.close": "Close",
+  "dialog.confirm": "Confirm",
+  "dialog.delete_confirm": "Delete '{name}' ?",
+
+  "guide.title": "Usage Guide",
+  "guide.text":
+"📡 USING THE TEACHER APP\n\n1. CONNECTION:\n   • Open the « Connection » tab\n   • Enter your name and the admin IP address\n   • Enter the encryption password (if configured)\n   • Click « Connect »\n\n2. GRADE ENTRY:\n   • Open the « Assignments » tab\n   • Select a class\n   • Select a subject\n   • Choose semester (S1/S2)\n   • Click « + Assignment » to add an assignment\n   • Enter grades for each student\n\n3. SENDING:\n   • Click « 🌐 Send to admin »\n   • Data is transmitted automatically\n   • The admin can then receive it",
+
+  "year": "Year",
+  "student": "student",
+  "students_plural": "students"
+}

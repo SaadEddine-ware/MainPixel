@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Certificat de scolarité</title>
+<style>
+  @page { margin: 2.5cm 2cm; }
+  body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; color: #000; }
+  .header { text-align: center; margin-bottom: 30px; }
+  .header .logo { font-size: 28pt; font-weight: bold; color: #006233; }
+  .header .ministry { font-size: 14pt; font-weight: bold; margin-top: 5px; }
+  .header .sub { font-size: 11pt; margin-top: 2px; }
+  .title { text-align: center; font-size: 16pt; font-weight: bold; margin: 30px 0; text-decoration: underline; }
+  .content { margin: 20px 0; text-align: justify; }
+  .signature { margin-top: 60px; text-align: right; }
+  .footer { text-align: center; margin-top: 40px; font-size: 9pt; border-top: 1px solid #000; padding-top: 8px; }
+  hr { border: none; border-top: 2px solid #006233; margin: 10px 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">&#x265B;</div>
+  <div class="ministry">Royaume du Maroc</div>
+  <div class="ministry">Ministère de l'Éducation Nationale</div>
+  <div class="sub">Direction Provinciale de {{ province }}</div>
+  <div class="sub">{{ ecole }}</div>
+  <hr>
+</div>
+
+<div class="title">CERTIFICAT DE SCOLARITÉ</div>
+
+<div class="content">
+  <p>Je soussigné(e), <strong>{{ directeur }}</strong>, Directeur(trice) de l'établissement <strong>{{ ecole }}</strong>, certifie que :</p>
+  <p style="padding-left: 30px;">
+    <strong>Nom et prénom :</strong> {{ student_name }}<br>
+    <strong>Code Massar :</strong> {{ code_massar }}<br>
+    <strong>Date de naissance :</strong> {{ birth_date }}<br>
+    <strong>Classe :</strong> {{ class_name }}<br>
+    <strong>Niveau :</strong> {{ level_name }}<br>
+    <strong>Année scolaire :</strong> {{ academic_year }}
+  </p>
+  <p>est régulièrement inscrit(e) dans cet établissement pour l'année scolaire {{ academic_year }}.</p>
+  <p>Le présent certificat lui est délivré pour servir et valoir ce que de droit.</p>
+</div>
+
+<div class="signature">
+  <p>Fait à {{ ville }}, le {{ date }}</p>
+  <p style="margin-top: 40px;"><strong>Le Directeur</strong></p>
+  <p>{{ directeur }}</p>
+</div>
+
+<div class="footer">
+  <p>Certificat délivré par mainpixel — Établissement {{ ecole }} | Tél : {{ telephone }}</p>
+</div>
+</body>
+</html>
